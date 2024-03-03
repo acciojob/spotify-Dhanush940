@@ -184,6 +184,8 @@ public class SpotifyRepository {
             return playlist;
        playlistListeners.add(user);
        playlistListenerMap.put(playlist,playlistListeners);
+        if(!userPlaylistMap.get(user).contains(playlist))
+            userPlaylistMap.get(user).add(playlist);
        return playlist;
     }
 
