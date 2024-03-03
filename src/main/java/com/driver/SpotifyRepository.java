@@ -40,12 +40,14 @@ public class SpotifyRepository {
     public User createUser(String name, String mobile) {
         User newUser=new User(name,mobile);
         users.add(newUser);
+        userPlaylistMap.put(newUser,new ArrayList<>());
         return newUser;
     }
 
     public Artist createArtist(String name) {
         Artist newArtist=new Artist(name);
         artists.add(newArtist);
+        artistAlbumMap.put(newArtist,new ArrayList<>());
         return newArtist;
     }
 
@@ -101,8 +103,13 @@ public class SpotifyRepository {
         if(user==null)
             throw new Exception("User does not exist");
         Playlist newPlaylist=new Playlist(title);
+        playlists.add(newPlaylist);
+
+        //Find songs having given length
         List<Song> songsHavingGivenLength=new ArrayList<>();
         findSongsHavingGivenLength(length,songsHavingGivenLength);
+
+        //
         playlistSongMap.put(newPlaylist,songsHavingGivenLength);
         creatorPlaylistMap.put(user,newPlaylist);
         playlistListenerMap.put(newPlaylist,new ArrayList<User>(Arrays.asList(user)));
@@ -136,6 +143,9 @@ public class SpotifyRepository {
         if(user==null)
             throw new Exception("User does not exist");
         Playlist newPlaylist=new Playlist(title);
+        playlists.add(newPlaylist);
+
+        //Find songs having given title
         List<Song> songsHavingGivenTitle=new ArrayList<>();
         findSongsHavingGivenTitle(songTitles,songsHavingGivenTitle);
         playlistSongMap.put(newPlaylist,songsHavingGivenTitle);
